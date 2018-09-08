@@ -1,3 +1,14 @@
-<p>
-  header works!
-</p>
+<div class="row header">
+  <div class="col-md-2 col-md-offset-2"></div>
+  <div class="col-md-2">
+    <h3 class="first">Single</h3>
+    <p-dropdown [options]="cities" [(ngModel)]="selectedCity" placeholder="Select a City" optionLabel="name" [showClear]="true"></p-dropdown>
+    <p>Selected City: {{selectedCity ? selectedCity.name : 'none'}}</p>
+  </div>
+  <div class="col-md-2">
+    <h3 class="first">Basic</h3>
+    <input id="input" type="text" size="30" #searchBox pInputText  (keyup)="onKey(searchBox.value)">
+    <span id="text">{{text}}</span>
+  </div>
+  <div class="col-md-2 col-md-offset-2"></div>
+</div>
