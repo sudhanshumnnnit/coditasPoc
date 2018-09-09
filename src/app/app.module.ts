@@ -9,9 +9,11 @@ import { HeaderComponent } from './header/header.component';
 import { ContentComponent } from './content/content.component';
 
 import {DropdownModule} from 'primeng/dropdown';
+import {PaginatorModule} from 'primeng/paginator';
 import {InputTextModule} from 'primeng/inputtext';
 import {CardModule} from 'primeng/card';
 import { OrderByPipe } from './order-by.pipe';
+
 
 @NgModule({
   declarations: [
@@ -27,7 +29,8 @@ import { OrderByPipe } from './order-by.pipe';
     DropdownModule,
     InputTextModule,
     CardModule,
-    HttpClientModule
+    HttpClientModule,
+    PaginatorModule
   ],
   providers: [],
   bootstrap: [AppComponent]

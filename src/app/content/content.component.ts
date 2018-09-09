@@ -12,18 +12,18 @@ export class ContentComponent implements OnInit {
   reposDetails: any
   users: any;
   name = '';
-  constructor(private userService: UserService) {
-    // console.log('in content category', this.catagoryObj);
-    
-  }
+  totalRecords = 0;
+  rows =0;
+  first = 0;
+  page = 0;
+  pageCount = 0;
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
     this.userService.currentsearch.subscribe(value => {
-      console.log("in content", value);
       this.searchUsers(value);
       this.userService.catSearch.subscribe(category => {
-        console.log('in content category1', category);
-        this.catagoryObj=category;
+        this.catagoryObj = category;
       });
     });
   }
@@ -31,18 +31,34 @@ export class ContentComponent implements OnInit {
   searchUsers(value) {
     this.userService.getUsers(value).subscribe(user => {
       this.users = user;
-      console.log("in searchfun", user);
+      this.paginationConfiguration();
     });
   }
-  
+
   details(user) {
     this.name = user.login;
     this.reposDetails = [];
     this.userService.getAllRepo(user.repos_url).subscribe(repos => {
       this.reposDetails = repos;
-      console.log("repos", repos);
     });
     this.showDetais = !this.showDetais;
+  }
+  paginationConfiguration() {
+    this.totalRecords = this.users.items.length;
+    this.rows = 5;
+  }
+
+  paginate(event) {
+
+    //event.first = Index of the first record
+    //event.rows = Number of rows to display in new page
+    //event.page = Index of the new page
+    //event.pageCount = Total number of pages
+    this.first = event.first;
+    this.rows = event.rows;
+    this.page = event.page;
+    this.pageCount = event.pageCount;
+
   }
 
 }
