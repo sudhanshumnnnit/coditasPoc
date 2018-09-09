@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { SelectItem } from 'primeng/api';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { UserService } from '../services/user.service';
 
 
 
-interface City {
+interface Category {
     name: string;
     code: string;
+    asc: boolean;
 }
 @Component({
     selector: 'app-header',
@@ -14,41 +14,20 @@ interface City {
     styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-    cities: City[];
+    sortCategories: Category[];
+    selectedCategory: Category;
+    selectCategory() {
+        this.userService.changeCat(this.selectedCategory);
+    }
 
-    selectedCity: City;
-
-    cars: SelectItem[];
-
-    selectedCar1: string;
-
-    selectedCar2: string = 'BMW';
-
-    selectedCar3: string;
-
-    // groupedCars: SelectItemGroup[];
     constructor(private userService: UserService) {
-        this.cities = [
-            { name: 'Name (A-Z)', code: 'NY' },
-            { name: 'Name (Z-A)', code: 'RM' },
-            { name: 'Rank (Asc)', code: 'LDN' },
-            { name: 'Rank (Dsc)', code: 'IST' }
+        this.sortCategories = [
+            { name: 'Name (A-Z)', code: 'login', asc: true },
+            { name: 'Name (Z-A)', code: 'login', asc: false },
+            { name: 'Rank (Asc)', code: 'score', asc: true },
+            { name: 'Rank (Dsc)', code: 'score', asc: false }
 
         ];
-
-        this.cars = [
-            { label: 'Audi', value: 'Audi' },
-            { label: 'BMW', value: 'BMW' },
-            { label: 'Fiat', value: 'Fiat' },
-            { label: 'Ford', value: 'Ford' },
-            { label: 'Honda', value: 'Honda' },
-            { label: 'Jaguar', value: 'Jaguar' },
-            { label: 'Mercedes', value: 'Mercedes' },
-            { label: 'Renault', value: 'Renault' },
-            { label: 'VW', value: 'VW' },
-            { label: 'Volvo', value: 'Volvo' }
-        ];
-
     }
 
     onKey(value) {

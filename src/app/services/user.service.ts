@@ -10,10 +10,17 @@ export class UserService {
   private messageSource = new BehaviorSubject<string>(null);
   currentsearch = this.messageSource.asObservable();
 
+  private catSource = new BehaviorSubject({ name: 'Name (A-Z)', code: 'login', asc: true });
+  catSearch = this.catSource.asObservable();
+
   constructor(private http: HttpClient) { }
 
   changeSearch(searchInput) {
     this.messageSource.next(searchInput)
+  }
+
+  changeCat(category) {
+    this.catSource.next(category)
   }
 
   getUsers(input) {
