@@ -13,18 +13,21 @@ export class ContentComponent implements OnInit {
   users: any;
   name = '';
   totalRecords = 0;
-  rows =0;
+  rows = 0;
   first = 0;
   page = 0;
   pageCount = 0;
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService) {
+    this.userService.search(this.userService.currentsearch)
+      .subscribe(user => {
+        this.users = user;
+        this.paginationConfiguration();
+      });
+  }
 
   ngOnInit() {
-    this.userService.currentsearch.subscribe(value => {
-      this.searchUsers(value);
-      this.userService.catSearch.subscribe(category => {
-        this.catagoryObj = category;
-      });
+    this.userService.catSearch.subscribe(category => {
+      this.catagoryObj = category;
     });
   }
 

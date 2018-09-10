@@ -59,4 +59,4 @@
                 </div>
             </div>
 </ng-container>
-<p-paginator [rows]="rows" [totalRecords]="totalRecords" (onPageChange)="paginate($event)"></p-paginator>
+<p-paginator *ngIf="users && users.items.length" [rows]="rows" [totalRecords]="totalRecords" (onPageChange)="paginate($event)"></p-paginator>

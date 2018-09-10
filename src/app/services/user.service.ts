@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-
-
+import { switchMap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
@@ -16,6 +15,7 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   changeSearch(searchInput) {
+    searchInput = searchInput ? searchInput : null;
     this.messageSource.next(searchInput)
   }
 
@@ -27,7 +27,16 @@ export class UserService {
     return this.http.get('https://api.github.com/search/users?q=' + input);
   }
 
-  getAllRepo(repos_url){
+  getAllRepo(repos_url) {
     return this.http.get(repos_url);
   }
+
+  search(terms: Observable<string>) {
+    return terms.pipe(
+      debounceTime(400),
+      distinctUntilChanged(),
+      switchMap(term => this.getUsers(term))
+    );
+  }
+
 }

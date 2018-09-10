@@ -2,7 +2,6 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { UserService } from '../services/user.service';
 
 
-
 interface Category {
     name: string;
     code: string;
